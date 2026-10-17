@@ -1,0 +1,155 @@
+@model PerfilPortafolio
+@{
+    ViewData["Title"] = "Portafolio";
+    var proyectosOtros = Model.Proyectos;
+}
+
+<section class="hero" id="inicio">
+    <div class="contenedor hero-fila">
+        <div class="hero-texto">
+            <h1>@Model.Nombre</h1>
+            <p class="lead">@Model.Resumen</p>
+            <div class="acciones">
+                <a class="boton boton-principal" href="#proyectos">Ver proyectos</a>
+                <a class="boton boton-suave" href="#contacto">Contactarme</a>
+            </div>
+        </div>
+        <figure class="hero-foto">
+            <img src="~/img/hansel.jpg" alt="Retrato de Hansel Herrera, de camisa azul marino, mirando hacia un lado" width="900" height="1017" />
+        </figure>
+    </div>
+</section>
+
+<section class="seccion" id="sobre-mi">
+    <div class="contenedor dos-col">
+        <div>
+            <h2>Sobre mí</h2>
+            @foreach (var parrafo in Model.SobreMi)
+            {
+                <p class="texto">@parrafo</p>
+            }
+        </div>
+        <dl class="datos">
+            @foreach (var d in Model.Datos)
+            {
+                <div class="dato">
+                    <dt>@d.Etiqueta</dt>
+                    <dd>@d.Valor</dd>
+                </div>
+            }
+        </dl>
+    </div>
+</section>
+
+<section class="seccion seccion-papel" id="habilidades">
+    <div class="contenedor">
+        <h2>Habilidades</h2>
+        <div class="grupos">
+            @foreach (var g in Model.Habilidades)
+            {
+                <div class="grupo">
+                    <h3>@g.Titulo</h3>
+                    <ul>
+                        @foreach (var item in g.Items)
+                        {
+                            <li>@item</li>
+                        }
+                    </ul>
+                </div>
+            }
+        </div>
+    </div>
+</section>
+
+<section class="vitrina" id="proyectos">
+    <div class="contenedor vitrina-fila">
+        <div class="vitrina-texto">
+            <h2>Sistema de inventario para la ferretería Don Toño</h2>
+            <p>
+                Aplicación móvil para llevar el control de un negocio de ferretería. Registra ventas y compras,
+                permite buscar en el historial por cliente o número de venta, y filtrar por fecha.
+            </p>
+            <p>
+                La pantalla de reportes resume el día: ventas, ganancias, productos vendidos y productos con
+                stock bajo, además de las ganancias de la semana en una gráfica.
+            </p>
+            <p class="nota">Las capturas usan datos de demostración.</p>
+        </div>
+        <div class="telefonos">
+            <div class="telefono telefono-a">
+                <img src="~/img/inventario-reportes.jpg" alt="Pantalla de reportes con ventas del día, ganancias, productos vendidos, stock bajo y gráfica semanal" width="600" height="1167" loading="lazy" />
+            </div>
+            <div class="telefono telefono-b">
+                <img src="~/img/inventario-historial.jpg" alt="Pantalla de historial de operaciones con tres ventas completadas" width="600" height="1167" loading="lazy" />
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="seccion">
+    <div class="contenedor">
+        <h2>Otros proyectos</h2>
+        <ul class="lista-proyectos">
+            @foreach (var p in proyectosOtros)
+            {
+                <li class="proyecto">
+                    <div class="proyecto-cab">
+                        <h3>@p.Nombre</h3>
+                        <p class="estado">@p.Estado</p>
+                    </div>
+                    <p class="proyecto-desc">@p.Descripcion</p>
+                    <ul class="etiquetas">
+                        @foreach (var t in p.Tecnologias)
+                        {
+                            <li>@t</li>
+                        }
+                    </ul>
+                </li>
+            }
+        </ul>
+    </div>
+</section>
+
+<section class="seccion seccion-papel" id="despliegue">
+    <div class="contenedor">
+        <h2>Cómo se publica este sitio</h2>
+        <p class="texto ancho-texto">
+            Cada cambio que subo a GitHub se compila y se despliega solo. Este es el recorrido:
+        </p>
+        <ol class="pasos">
+            @foreach (var paso in Model.Despliegue)
+            {
+                <li>
+                    <h3>@paso.Titulo</h3>
+                    <p>@paso.Detalle</p>
+                </li>
+            }
+        </ol>
+    </div>
+</section>
+
+<section class="seccion" id="contacto">
+    <div class="contenedor dos-col">
+        <div>
+            <h2>Contacto</h2>
+            <p class="texto">
+                Busco mi primera oportunidad en inteligencia de negocios y datos. Si tienes una vacante, una
+                práctica o un proyecto en el que pueda aportar, escríbeme.
+            </p>
+        </div>
+        <ul class="enlaces">
+            @if (!string.IsNullOrWhiteSpace(Model.Correo))
+            {
+                <li><a href="mailto:@Model.Correo">@Model.Correo</a></li>
+            }
+            @if (!string.IsNullOrWhiteSpace(Model.GitHub))
+            {
+                <li><a href="@Model.GitHub" target="_blank" rel="noopener">GitHub</a></li>
+            }
+            @if (!string.IsNullOrWhiteSpace(Model.LinkedIn))
+            {
+                <li><a href="@Model.LinkedIn" target="_blank" rel="noopener">LinkedIn</a></li>
+            }
+        </ul>
+    </div>
+</section>

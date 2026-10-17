@@ -1,0 +1,78 @@
+# Pipeline CI/CD del portafolio (ASP.NET Core MVC, .NET 8).
+# Se ejecuta en cada push a la rama main: compila, publica y despliega en Azure App Service.
+#
+# PENDIENTE: completa las dos variables marcadas abajo con tus valores reales.
+# Este pipeline asume un App Service en Windows. Si tu App Service es Linux, cambia
+# vmImage a 'ubuntu-latest' y appType a 'webAppLinux'.
+
+trigger:
+  branches:
+    include:
+      - main
+
+pool:
+  vmImage: 'windows-latest'
+
+variables:
+  buildConfiguration: 'Release'
+  # CAMBIA estos dos valores por los tuyos:
+  azureSubscription: 'conexion-azure'   # nombre de la Service Connection en Azure DevOps
+  webAppName: 'portafolio-hansel'       # nombre exacto del App Service en Azure
+
+stages:
+  - stage: Build
+    displayName: 'Compilar y publicar'
+    jobs:
+      - job: BuildJob
+        displayName: 'Build'
+        steps:
+          - task: UseDotNet@2
+            displayName: 'Instalar SDK de .NET 8'
+            inputs:
+              packageType: 'sdk'
+              version: '8.0.x'
+
+          - task: DotNetCoreCLI@2
+            displayName: 'Restaurar paquetes'
+            inputs:
+              command: 'restore'
+              projects: '**/*.csproj'
+
+          - task: DotNetCoreCLI@2
+            displayName: 'Compilar'
+            inputs:
+              command: 'build'
+              projects: '**/*.csproj'
+              arguments: '--configuration $(buildConfiguration) --no-restore'
+
+          - task: DotNetCoreCLI@2
+            displayName: 'Publicar'
+            inputs:
+              command: 'publish'
+              publishWebProjects: true
+              arguments: '--configuration $(buildConfiguration) --output $(Build.ArtifactStagingDirectory)'
+              zipAfterPublish: true
+
+          - publish: $(Build.ArtifactStagingDirectory)
+            displayName: 'Guardar artefacto'
+            artifact: drop
+
+  - stage: Deploy
+    displayName: 'Desplegar a Azure'
+    dependsOn: Build
+    condition: succeeded()
+    jobs:
+      - deployment: DeployWeb
+        displayName: 'Deploy a App Service'
+        environment: 'produccion'
+        strategy:
+          runOnce:
+            deploy:
+              steps:
+                - task: AzureWebApp@1
+                  displayName: 'Desplegar a Azure Web App'
+                  inputs:
+                    azureSubscription: '$(azureSubscription)'
+                    appType: 'webApp'
+                    appName: '$(webAppName)'
+                    package: '$(Pipeline.Workspace)/drop/**/*.zip'

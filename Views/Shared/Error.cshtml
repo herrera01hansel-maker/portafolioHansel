@@ -1,0 +1,16 @@
+@model ErrorViewModel
+@{
+    ViewData["Title"] = "Error";
+}
+
+<section class="seccion">
+    <div class="contenedor">
+        <h1>Algo salió mal</h1>
+        <p class="texto">La página no pudo cargarse. Vuelve al inicio e inténtalo de nuevo.</p>
+        <p><a class="boton boton-principal" href="/">Volver al inicio</a></p>
+        @if (Model.ShowRequestId)
+        {
+            <p class="nota">Código de solicitud: <code>@Model.RequestId</code></p>
+        }
+    </div>
+</section>

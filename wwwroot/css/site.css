@@ -1,0 +1,362 @@
+/* Portafolio de Hansel Herrera
+   Paleta tomada del sistema de inventario: azul tinta y ámbar. */
+
+:root {
+  --tinta: #0e2a47;
+  --tinta-clara: #1b3f66;
+  --ambar: #f2b53d;
+  --ambar-oscuro: #c98d12;
+  --papel: #f4f6fa;
+  --blanco: #ffffff;
+  --pizarra: #55657a;
+  --linea: #d9e0ea;
+
+  --fuente-titulo: "Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
+  --fuente-texto: "Instrument Sans", "Segoe UI", system-ui, sans-serif;
+
+  --ancho: 1120px;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; scroll-padding-top: 72px; }
+
+body {
+  margin: 0;
+  background: var(--blanco);
+  color: var(--tinta);
+  font-family: var(--fuente-texto);
+  font-size: 1.0625rem;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+img { max-width: 100%; height: auto; display: block; }
+
+h1, h2, h3 {
+  font-family: var(--fuente-titulo);
+  line-height: 1.1;
+  margin: 0;
+  letter-spacing: -0.02em;
+}
+
+p { margin: 0 0 1rem; }
+
+a { color: inherit; }
+
+:focus-visible {
+  outline: 3px solid var(--ambar);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+.contenedor {
+  width: 100%;
+  max-width: var(--ancho);
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+.saltar {
+  position: absolute;
+  left: -999px;
+  top: 0.5rem;
+  background: var(--ambar);
+  color: var(--tinta);
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  z-index: 100;
+}
+.saltar:focus { left: 0.5rem; }
+
+/* Cabecera */
+.cabecera {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--linea);
+}
+.cabecera-fila {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  min-height: 60px;
+  flex-wrap: wrap;
+}
+.marca {
+  font-family: var(--fuente-titulo);
+  font-weight: 700;
+  font-size: 1.15rem;
+  text-decoration: none;
+  letter-spacing: -0.01em;
+}
+.menu {
+  display: flex;
+  gap: 1.5rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  flex-wrap: wrap;
+}
+.menu a {
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 0.95rem;
+  color: var(--pizarra);
+  padding: 0.25rem 0;
+  border-bottom: 2px solid transparent;
+}
+.menu a:hover { color: var(--tinta); border-bottom-color: var(--ambar); }
+
+/* Hero */
+.hero { padding: clamp(2.5rem, 7vw, 5.5rem) 0; }
+.hero-fila {
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  gap: clamp(2rem, 6vw, 5rem);
+  align-items: center;
+}
+.hero h1 {
+  font-size: clamp(2.4rem, 5vw, 4.2rem);
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+}
+.lead {
+  font-size: clamp(1.1rem, 2vw, 1.3rem);
+  color: var(--pizarra);
+  max-width: 34em;
+  margin-bottom: 2rem;
+}
+.acciones { display: flex; gap: 0.75rem; flex-wrap: wrap; }
+
+.boton {
+  display: inline-block;
+  font-weight: 600;
+  font-size: 1rem;
+  text-decoration: none;
+  padding: 0.8rem 1.4rem;
+  border-radius: 999px;
+  border: 2px solid transparent;
+  transition: background-color 0.15s, border-color 0.15s;
+}
+.boton-principal { background: var(--tinta); color: var(--blanco); }
+.boton-principal:hover { background: var(--tinta-clara); }
+.boton-suave { border-color: var(--tinta); color: var(--tinta); }
+.boton-suave:hover { background: var(--papel); }
+
+.hero-foto {
+  position: relative;
+  isolation: isolate;
+  margin: 0;
+  width: min(100%, 380px);
+  justify-self: center;
+  aspect-ratio: 4 / 5;
+}
+.hero-foto::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  transform: translate(18px, 18px);
+  background: var(--ambar);
+  border-radius: 50% 50% 28px 28px / 40% 40% 28px 28px;
+  z-index: -1;
+}
+.hero-foto img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 38% 18%;
+  border-radius: 50% 50% 28px 28px / 40% 40% 28px 28px;
+  background: var(--tinta);
+}
+
+/* Secciones */
+.seccion { padding: clamp(3rem, 7vw, 5.5rem) 0; }
+.seccion-papel { background: var(--papel); }
+.seccion h2, .vitrina h2 {
+  font-size: clamp(1.9rem, 3.6vw, 2.7rem);
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+}
+.texto { color: var(--pizarra); max-width: 38em; }
+.ancho-texto { margin-bottom: 2.5rem; }
+
+.dos-col {
+  display: grid;
+  grid-template-columns: 1.2fr 0.8fr;
+  gap: clamp(2rem, 6vw, 5rem);
+  align-items: start;
+}
+
+/* Sobre mí */
+.datos { margin: 0; border-top: 2px solid var(--tinta); }
+.dato {
+  display: grid;
+  grid-template-columns: 7rem 1fr;
+  gap: 1rem;
+  padding: 0.9rem 0;
+  border-bottom: 1px solid var(--linea);
+}
+.dato dt { font-weight: 600; color: var(--pizarra); }
+.dato dd { margin: 0; }
+
+/* Habilidades */
+.grupos {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2.5rem;
+}
+.grupo h3 {
+  font-size: 1.25rem;
+  padding-bottom: 0.75rem;
+  margin-bottom: 0.75rem;
+  border-bottom: 2px solid var(--ambar);
+}
+.grupo ul { list-style: none; margin: 0; padding: 0; }
+.grupo li { padding: 0.4rem 0; border-bottom: 1px solid var(--linea); }
+
+/* Vitrina del sistema de inventario */
+.vitrina {
+  background: var(--tinta);
+  color: var(--blanco);
+  padding: clamp(3rem, 7vw, 5.5rem) 0;
+  overflow: hidden;
+}
+.vitrina-fila {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(2rem, 6vw, 4rem);
+  align-items: center;
+}
+.vitrina-texto p { color: #cdd8e6; max-width: 32em; }
+.vitrina-texto .nota { font-size: 0.9rem; color: #9fb2c8; }
+
+.telefonos {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 1rem 0 2rem;
+}
+.telefono {
+  width: min(46%, 250px);
+  border: 8px solid #06131f;
+  border-radius: 34px;
+  overflow: hidden;
+  background: #06131f;
+  box-shadow: 0 30px 50px -18px rgba(0, 0, 0, 0.65);
+}
+.telefono img { width: 100%; }
+.telefono-a { transform: rotate(-4deg) translateY(10px); z-index: 1; }
+.telefono-b { transform: rotate(3deg) translateY(50px); margin-left: -2.5rem; }
+
+/* Lista de proyectos */
+.lista-proyectos { list-style: none; margin: 0; padding: 0; border-top: 2px solid var(--tinta); }
+.proyecto {
+  display: grid;
+  grid-template-columns: 1fr 1.4fr;
+  gap: 0.5rem 2.5rem;
+  padding: 1.75rem 0;
+  border-bottom: 1px solid var(--linea);
+}
+.proyecto-cab h3 { font-size: 1.45rem; margin-bottom: 0.35rem; }
+.estado { color: var(--ambar-oscuro); font-weight: 600; font-size: 0.95rem; margin: 0; }
+.proyecto-desc { color: var(--pizarra); margin-bottom: 0.75rem; }
+.etiquetas {
+  grid-column: 2;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+.etiquetas li {
+  background: var(--papel);
+  border: 1px solid var(--linea);
+  border-radius: 8px;
+  padding: 0.15rem 0.7rem;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+.proyecto-desc { grid-column: 2; }
+
+/* Pasos de despliegue */
+.pasos {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.5rem;
+  counter-reset: paso;
+}
+.pasos li {
+  counter-increment: paso;
+  position: relative;
+  padding-top: 3.25rem;
+  border-top: 2px solid var(--tinta);
+}
+.pasos li::before {
+  content: counter(paso);
+  position: absolute;
+  top: -2px;
+  left: 0;
+  width: 2.25rem;
+  height: 2.25rem;
+  display: grid;
+  place-items: center;
+  background: var(--ambar);
+  color: var(--tinta);
+  font-family: var(--fuente-titulo);
+  font-weight: 700;
+  border-radius: 0 0 10px 0;
+}
+.pasos h3 { font-size: 1.2rem; margin-bottom: 0.5rem; }
+.pasos p { color: var(--pizarra); font-size: 0.98rem; margin: 0; }
+
+/* Contacto */
+.enlaces { list-style: none; margin: 0; padding: 0; border-top: 2px solid var(--tinta); }
+.enlaces li { border-bottom: 1px solid var(--linea); }
+.enlaces a {
+  display: block;
+  padding: 1rem 0;
+  font-family: var(--fuente-titulo);
+  font-size: 1.35rem;
+  font-weight: 500;
+  text-decoration: none;
+  overflow-wrap: anywhere;
+}
+.enlaces a:hover { color: var(--ambar-oscuro); }
+
+/* Pie */
+.pie { border-top: 1px solid var(--linea); padding: 1.75rem 0; color: var(--pizarra); font-size: 0.92rem; }
+.pie p { margin: 0; }
+
+.nota { font-size: 0.9rem; color: var(--pizarra); }
+
+/* Pantallas medianas y pequeñas */
+@media (max-width: 900px) {
+  .hero-fila, .dos-col, .vitrina-fila { grid-template-columns: 1fr; }
+  .grupos { grid-template-columns: 1fr; gap: 2rem; }
+  .pasos { grid-template-columns: 1fr 1fr; }
+  .proyecto { grid-template-columns: 1fr; }
+  .proyecto-desc, .etiquetas { grid-column: 1; }
+  .hero-foto { order: -1; width: min(100%, 300px); }
+  .menu { gap: 1rem; }
+}
+
+@media (max-width: 520px) {
+  .pasos { grid-template-columns: 1fr; }
+  .dato { grid-template-columns: 1fr; gap: 0.1rem; }
+  .telefono { width: min(48%, 200px); border-width: 6px; border-radius: 26px; }
+  .telefono-b { margin-left: -1.25rem; }
+  .cabecera-fila { padding-top: 0.5rem; padding-bottom: 0.5rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  * { transition: none !important; }
+}
